@@ -14,7 +14,7 @@ def ExtractionDesFichiers(infile,outpath):
                 f.close()
             debut = False
             a,b = line.split(" ")
-            print "processing file CACM-"+b[:-1]
+            print ("processing file CACM-"+b[:-1])
             f = open(outpath+"CACM-"+b[:-1],"w+")
         if line[:-1] == '.T' or line[:-1] == '.A' or line[:-1] == '.W' or line[:-1] == '.B':
             out = True
