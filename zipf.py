@@ -1,6 +1,5 @@
 import os
 from math import log
-import numpy as np
 inputDirectory = "../clean/"
 
 def zipf(indir):
@@ -19,9 +18,11 @@ def zipf(indir):
                 vocab[i] = 1
     
     sorted_vocab = sorted(vocab.items(), key=lambda kv:kv[1], reverse=True)
-    tab = np.asarray(sorted_vocab)
-    print(tab[1][1])
-    
+
+    svtab = []
+    for i in range(len(sorted_vocab)):
+        svtab.append(sorted_vocab[i][1])
+
     print("Les 10 mots les plus frequents:")
     print(sorted_vocab[0:9])
     print("\nLa taille du vocabulaire: %d \n" %(len(sorted_vocab)))
