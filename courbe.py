@@ -1,3 +1,4 @@
+import matplotlib.pyplot as plt
 import os
 from math import log
 inputDirectory = "../clean/"
@@ -29,4 +30,22 @@ def zipf(indir):
     lbda = m/log(len(sorted_vocab))
     print("Lambda = %d" %(lbda))
 
+
+    plt.title("Nombre d'occurrence total en fonction du rang")
+    plt.ylabel("Nombre d'occurrence")
+    plt.xlabel("Rang")
+    plt.plot(svtab)
+    plt.show()
+
+    plt.title("Courbe de Zipf")
+    plt.ylabel("Nombre d'occurences")
+    plt.xlabel("Rang")
+    tab2 = []
+    for ind in range(len(svtab)):
+        tab2.append(lbda/(ind+1))
+    plt.plot(tab2)
+    plt.show()
+
 zipf(inputDirectory)
+
+
