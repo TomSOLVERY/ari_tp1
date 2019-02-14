@@ -3,8 +3,9 @@ from math import log
 import json
 
 inputDirectory = "../antiDict/"
+outputDirectory = "../json/"
 
-def SaltonVect(indir):
+def SaltonVect(indir, outdir):
     # un dictionnaire qui stocke l'ensemble de tous les vecteurs de documents
     # avec l'identifiant de document comme cle
     res = {}
@@ -12,7 +13,7 @@ def SaltonVect(indir):
     docs = os.listdir(indir)
     N = len(docs)
     # chargement du vocabulaire
-    vf = open("../vocabulaire.json", "r")
+    vf = open(outdir+"vocabulaire.json", "r")
     vocab = json.load(vf)
     vf.close()
     # Pour tout fichier sttr
@@ -36,8 +37,8 @@ def SaltonVect(indir):
         # ajout du vecteur du doc dans res avec l'identifiant de document comme cle
         res[int(file.strip("CACM-").strip(".sttr"))] = dvect
     # verification du resultat
-    f = open("../json/vect.json", "w+")
+    f = open(outdir+"vect.json", "w+")
     json.dump(res, f)
     f.close()
 
-SaltonVect(inputDirectory)
+SaltonVect(inputDirectory, outputDirectory)

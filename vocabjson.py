@@ -2,8 +2,9 @@ import os
 import json
 
 inputDirectory = "../antiDict/"
+outputDirectory = "../json/"
 
-def vocabjson(indir):
+def vocabjson(indir, outdir):
     vj = {} # dictionnaire du vocabulaire.json
     for file in os.listdir(indir):
         vjfh = open(indir+file, "r") # vj fileHandler
@@ -19,8 +20,8 @@ def vocabjson(indir):
                 vj[i] = 1    
     vj.pop("") # Supprimer le mot vide car aucun interet
     # Ecriture dans le fichier json
-    f = open("../json/vocabulaire.json", "w+")
+    f = open(outdir+"vocabulaire.json", "w+")
     json.dump(vj, f)
     f.close()
 
-vocabjson(inputDirectory)
+vocabjson(inputDirectory, outputDirectory)
