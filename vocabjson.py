@@ -16,7 +16,7 @@ def vocabjson(indir):
                 vj[i] = vj[i] + 1
             else:
                 vj[i] = 1
-    
+    vj.pop("")
     f = open("../vocabulaire.json", "w+")
     json.dump(vj, f)
     f.close()
