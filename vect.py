@@ -36,6 +36,8 @@ def SaltonVect(indir):
         # ajout du vecteur du doc dans res avec l'identifiant de document comme cle
         res[int(file.strip("CACM-").strip(".sttr"))] = dvect
     # verification du resultat
-    print(res)
+    f = open("../json/vect.json", "w+")
+    json.dump(res, f)
+    f.close()
 
 SaltonVect(inputDirectory)

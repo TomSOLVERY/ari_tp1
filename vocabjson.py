@@ -19,7 +19,7 @@ def vocabjson(indir):
                 vj[i] = 1    
     vj.pop("") # Supprimer le mot vide car aucun interet
     # Ecriture dans le fichier json
-    f = open("../vocabulaire.json", "w+")
+    f = open("../json/vocabulaire.json", "w+")
     json.dump(vj, f)
     f.close()
 
