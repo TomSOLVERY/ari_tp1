@@ -5,13 +5,12 @@ inputDirectory = "../antiDict/"
 
 def vocabjson(indir):
     vj = {}
-    m = 0
     for file in os.listdir(indir):
         vjfh = open(indir+file, "r") 
-        words = vjfh.read().split(" ")
+        # Un set ne contient pas de duplicats. a voir comme list.uniq()
+        words = set(vjfh.read().split(" "))
         vjfh.close()
         for i in words:
-            m = m+1
             if i in vj:
                 vj[i] = vj[i] + 1
             else:
