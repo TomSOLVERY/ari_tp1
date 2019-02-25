@@ -1,13 +1,11 @@
 import os, json
 from math import log, sqrt
 from nltk.stem.porter import *
+import curses
 
 jsonDir = "../json/"
 
-def recherche (indir, M):
-    # Ne pas oublier: 
-    # - Gerer les mots qui ne sont pas dans le vocabulaire
-    # - Appliquer l'anti dictionnaire et troncature a la requete
+def recherche (stdscr, indir, M):
     
     # chargement de l'index inverse
     iifh = open(indir+"indexInverse.json", "r")
@@ -31,16 +29,29 @@ def recherche (indir, M):
 
     N = len(normeDocs)
 
-    # ==== A FAIRE ==== Recuperation de la requete
-    query = "honeywel marriag"
+    # Boucle principale
+    curses.echo()
+    stdscr.scrollok(True)
+    stdscr.addstr("Bonjour, Veuillez entrer une requete \n")
+    while True:
+        query = stdscr.getstr()
+        if (query == ""):
+            break
+        qTreatment(stdscr, query, M, indInv, vocab, cw, normeDocs, N)
+    curses.endwin()
 
+def qTreatment (stdscr, query, M, indInv, vocab, cw, normeDocs, N):
     # Application de l'anti-dictionnaire et troncature
     stemmer = PorterStemmer() # creation d'un objet stemmer (troncature)
     words = query.split(" ")
     termQ = [] # liste resultat
     for i in words:
+        # anti-dictionnaire
         if (not (i in cw)):
-            termQ.append((stemmer.stem(i.lower())))
+            term = stemmer.stem(i.lower()) # troncature
+            # Ajout si le terme fait partie de notre vocabulaire
+            if (term in vocab):
+                termQ.append(term)
 
     dictQ = {}  # Dictionnaire de la requete (terme: idf)
     normQ = 0   # Norme de la requete
@@ -77,8 +88,11 @@ def recherche (indir, M):
     sres = sorted(res.items(), key=lambda kv:kv[1], reverse=True)
 
     # Affichage
-    for i in range(M):
-        print (sres[i][0] + "\n")
+    for i in range(min(len(sres), M)):
+        stdscr.addstr(sres[i][0] + "\n")
 
 
-recherche(jsonDir, 5)    
+def mainf(stdscr):
+    recherche(stdscr, jsonDir, 5)
+
+curses.wrapper(mainf)
