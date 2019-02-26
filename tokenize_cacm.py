@@ -1,8 +1,13 @@
+# 2
+# La fonction Numberless ouvre un à un les fichiers CACM-XX du répertoire split (rempli à l'étape précédente), 
+# et pour chaque fichier, ne garde que des mots qui commencent par une lettre et qui 
+# ne contiennnent que des lettres et des chiffres et écrit le résultat (en minuscule) 
+# dans un autre fichier portant le même nom et avec l'extension .flt en plus.
+
 import os
 from nltk.tokenize import RegexpTokenizer
 inputDirectory = "../split/"
 outputDirectory = "../clean/"
-
 
 def Numberless(indir, outdir):
     for file in os.listdir(indir):
