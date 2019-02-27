@@ -2,18 +2,18 @@ TP qui consiste a developper un modele vectoriel de recherche d'information sur 
 
 La hierarchie du repertoire est la suivante
 
-|--antiDict/
-|--clean/
-|--json/
-|--split/
-|--src/
-   |--split_cacm.py
-   |--tokenize_cacm.py
-   |--courbe.py
-   ...
-|--cacm.all
-|--common_words
-...
+|--antiDict/  
+|--clean/  
+|--json/  
+|--split/  
+|--src/  
+   |--split_cacm.py  
+   |--tokenize_cacm.py  
+   |--courbe.py  
+   ...  
+|--cacm.all  
+|--common_words  
+...  
 
 L'ordre d'execution est le suivant (avec une explication de la fonction du programme):
 
