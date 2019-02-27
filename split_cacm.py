@@ -1,6 +1,6 @@
-# 1
+# 1 - split_cacm.py
 # Pour chaque balise .I, la fonction suivante extrait les contenu des balises .T, .A, .W et .B 
-# en les mettant dans un fichier portant le nom CACM-XX où XX est le numéro associé à la balise .I 
+# en les mettant dans un fichier portant le nom CACM-XX où XX est le numero associe a la balise .I 
 
 inpfilename = "../cacm.all"
 outpathname = "../split/"

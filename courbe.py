@@ -1,4 +1,11 @@
-# 3
+# 3 - courbe.py
+# calcul de la frequence d'apparition de tous les termes de la collection et
+# tri par le nombre d'apparition decroissant afin d'afficher
+#    a) Les 10 termes les plus frequents dans l'ordre decroissant avec leur nombre d'occurrences
+#    b) La taille du vocabulaire
+#    c) La valeur lambda theorique calculee.
+#    d) La courbe qui present le nombre total d'occurrences en fonction du rang de tous les termes.
+#    e) La courbe de Zipf theorique pour les rangs de 1 au nombre de termes du vocabulaire.
 
 import matplotlib.pyplot as plt
 import os
@@ -13,7 +20,7 @@ def zipf(indir):
         fileHandler = open(indir+file, "r")
         doc = fileHandler.read() 
         words = doc.split(" ")
-        # calcul de la fréquence d'apparition de tous les termes de la collection
+        # calcul de la frequence d'apparition de tous les termes de la collection
         for i in words:
             m = m+1
             if i in vocab:

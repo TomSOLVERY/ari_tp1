@@ -1,4 +1,8 @@
-# 6
+# 6 - vect.py
+# construction de la representation vectorielle de tous les documents d'apres le modele vectoriel de Salton.
+# Le type de representation choisi est une representation creuse (sparse) de chaque document d 
+# avec un dictionnaire de couples (terme, tf.idf du terme dans d), ou idf_i = ln(N/df_i) 
+# On ne se preoccupe pas encore de la normalisation.
 
 import os
 from math import log

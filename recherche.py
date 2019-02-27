@@ -1,9 +1,9 @@
-# 9
+# 9 - recherche.py
+# Recuperation et traitment des requetes en calculant la correspondace RSV par un cosinus
 
-import os, json
+import json, curses
 from math import log, sqrt
 from nltk.stem.porter import *
-import curses
 
 jsonDir = "../json/"
 
@@ -29,11 +29,11 @@ def recherche (stdscr, indir, M):
     normeDocs = json.load(normefh)
     normefh.close()
 
-    N = len(normeDocs)
+    N = len(normeDocs) # Taille du corpus
 
     # Boucle principale
-    curses.echo()
-    stdscr.scrollok(True)
+    curses.echo() # Afficher ce qui est tapee
+    stdscr.scrollok(True) # rendre le fenetre glissable
     stdscr.addstr("Bonjour, Veuillez entrer une requete \n")
     while True:
         query = stdscr.getstr()
@@ -49,24 +49,25 @@ def qTreatment (stdscr, query, M, indInv, vocab, cw, normeDocs, N):
     termQ = [] # liste resultat
     for i in words:
         # anti-dictionnaire
-        if (not (i in cw)):
+        if (not (i.lower() in cw)):
             term = stemmer.stem(i.lower()) # troncature
             # Ajout si le terme fait partie de notre vocabulaire
             if (term in vocab):
                 termQ.append(term)
 
     dictQ = {}  # Dictionnaire de la requete (terme: idf)
-    normQ = 0   # Norme de la requete
     for t in termQ:
         # si le mot apparait plusieur fois dans la requete
         if t in dictQ:
             dictQ[t] += dictQ[t]
         # si premier occurrence du mot
         else:
-            t_idf = log(N/vocab[t])
-            dictQ[t] = t_idf
-        # Calcul de la norme
-        normQ += t_idf*t_idf
+            dictQ[t] = log(N/vocab[t])
+
+    # Calcul de la norme
+    normQ = 0   # Norme de la requete
+    for t in dictQ:
+        normQ += dictQ[t]*dictQ[t]
     normQ = sqrt(normQ)
 
     # ===== Produit scalaire =====
@@ -89,7 +90,7 @@ def qTreatment (stdscr, query, M, indInv, vocab, cw, normeDocs, N):
     # Tri par valeurs decroissantes
     sres = sorted(res.items(), key=lambda kv:kv[1], reverse=True)
 
-    # Affichage
+    # Affichage (min au cas ou il y a moins de resultats que M)
     for i in range(min(len(sres), M)):
         stdscr.addstr(sres[i][0] + "\n")
 

@@ -1,7 +1,7 @@
-# 8
+# 8 - norme.py
+# calcul de le norme de chaque document
 
 import json
-import os
 from math import sqrt
 
 inputDirectory = "../json/"

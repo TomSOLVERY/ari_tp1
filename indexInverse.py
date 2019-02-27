@@ -1,4 +1,6 @@
-# 7
+# 7 - IndexInverse.py
+# Construction de l'indexe inverse a partir de la representation vectorielle des documents.
+# Resultat dans le fichier indexInverse.json en format terme: {idDoc: tf.idf dans le doc}
 
 import json
 import os
