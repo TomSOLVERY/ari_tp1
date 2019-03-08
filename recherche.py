@@ -63,7 +63,7 @@ def qTreatment (stdscr, query, M, indInv, vocab, cw, normeDocs, N):
         # si premier occurrence du mot
         else:
             dictQ[t] = log(N/vocab[t])
-
+            
     # Calcul de la norme
     normQ = 0   # Norme de la requete
     for t in dictQ:
@@ -85,7 +85,12 @@ def qTreatment (stdscr, query, M, indInv, vocab, cw, normeDocs, N):
     
     # Normalisation
     for idDoc in res:
-        res[idDoc] /= normQ*normeDocs[idDoc]
+        if normQ*normeDocs[idDoc] != 0:
+            res[idDoc] /= normQ*normeDocs[idDoc]
+        else:
+            stdscr.addstr("Le mot cacm n'est pas pertinent \n")
+            M = 0
+            break
 
     # Tri par valeurs decroissantes
     sres = sorted(res.items(), key=lambda kv:kv[1], reverse=True)
