@@ -61,4 +61,4 @@ L'ordre d'execution est le suivant (avec une explication de la fonction du progr
   calcul de le norme de chaque document
 
 9 - recherche.py  
-  Recuperation et traitment des requetes en calculant la correspondace RSV par un cosinus
+  Recuperation et traitment des requetes en calculant la correspondace RSV par un cosinus. Attention Si vous utilisez Mac, il faut remplacer “xdg-open” par “open” dans la ligne 49
