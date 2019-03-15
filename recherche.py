@@ -1,9 +1,10 @@
 # 9 - recherche.py
 # Recuperation et traitment des requetes en calculant la correspondace RSV par un cosinus
 
-import json, curses
+import json, curses, string, subprocess
 from math import log, sqrt
 from nltk.stem.porter import *
+from mercurial.templater import word
 
 jsonDir = "../json/"
 
@@ -31,15 +32,24 @@ def recherche (stdscr, indir, M):
 
     N = len(normeDocs) # Taille du corpus
 
-    # Boucle principale
     curses.echo() # Afficher ce qui est tapee
     stdscr.scrollok(True) # rendre le fenetre glissable
-    stdscr.addstr("Bonjour, Veuillez entrer une requete \n")
+    curses.init_pair(1, curses.COLOR_CYAN, curses.COLOR_BLACK) # texte en couleur cyan
+    curses.init_pair(2, curses.COLOR_GREEN, curses.COLOR_BLACK) # texte en couleur verte
+    stdscr.addstr("Bonjour, Veuillez entrer\n - Une requete pour faire un recherche ou\n - Un numero de document pour l'ouvrir\n")
+    
+    # Boucle principale
     while True:
         query = stdscr.getstr()
         if (query == ""):
             break
-        qTreatment(stdscr, query, M, indInv, vocab, cw, normeDocs, N)
+        try:
+            if int(query) in range(N):
+                stdscr.addstr("Ouverture du document " + query + "\n")
+                # Si vous utilisez un Mac, remplacer "xdg-open" par "open"
+                subprocess.call(["xdg-open", "../clean/CACM-" + query + ".flt"])
+        except:
+            qTreatment(stdscr, query, M, indInv, vocab, cw, normeDocs, N)
     curses.endwin()
 
 def qTreatment (stdscr, query, M, indInv, vocab, cw, normeDocs, N):
@@ -54,6 +64,10 @@ def qTreatment (stdscr, query, M, indInv, vocab, cw, normeDocs, N):
             # Ajout si le terme fait partie de notre vocabulaire
             if (term in vocab):
                 termQ.append(term)
+                
+    if not termQ:
+        stdscr.addstr("Votre requete n'as monte aucun resultat\n")
+        return
 
     dictQ = {}  # Dictionnaire de la requete (terme: idf)
     for t in termQ:
@@ -97,8 +111,22 @@ def qTreatment (stdscr, query, M, indInv, vocab, cw, normeDocs, N):
 
     # Affichage (min au cas ou il y a moins de resultats que M)
     for i in range(min(len(sres), M)):
-        stdscr.addstr(sres[i][0] + "\n")
-
+        # Du nom du document et sot idf
+        stdscr.addstr(sres[i][0] + "\t" + str(sres[i][1]) + "\n", curses.A_BOLD)
+        
+        # Des quelques mots en debut du document
+        docfh = open("../clean/CACM-"+sres[i][0]+".flt", "r")
+        doc = docfh.read().split(" ")
+        docfh.close()
+        
+        # En couleur different si mot dans la requete
+        for j in range (min(len(doc), 15)):
+            if doc[j] in words:
+                stdscr.addstr(doc[j]+" ", curses.color_pair(2))
+            else:
+                stdscr.addstr(doc[j]+" ", curses.color_pair(1))
+        
+        stdscr.addstr("\n")
 
 def mainf(stdscr):
     recherche(stdscr, jsonDir, 5)
